@@ -1,0 +1,17 @@
+version: '3.8'
+
+services:
+  mysql:
+    image: mysql:latest
+    volumes:
+      - issues-mysql-data:/var/lib/mysql
+    ports:
+      - "5433:5432"
+    environment:
+      MYSQL_ROOT_PASSWORD: issuesmysql
+      MYSQL_DATABASE: issues
+      MYSQL_USER: mysql
+      MYSQL_PASSWORD: issuesmysql
+
+volumes:
+  issues-mysql-data:
