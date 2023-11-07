@@ -1,5 +1,6 @@
+import { IssueStatus } from "@/app/components";
 import prisma from "@/prisma/client";
-import { Box, Button, Flex, Table } from "@radix-ui/themes";
+import { Box, Button, Table } from "@radix-ui/themes";
 import Link from "next/link";
 
 const Issues: React.FC = async () => {
@@ -29,9 +30,13 @@ const Issues: React.FC = async () => {
             <Table.Row key={id}>
               <Table.Cell>
                 {title}
-                <Box className="block md:hidden">{status}</Box>
+                <Box className="block md:hidden">
+                  <IssueStatus status={status} />
+                </Box>
               </Table.Cell>
-              <Table.Cell className="hidden md:table-cell">{status}</Table.Cell>
+              <Table.Cell className="hidden md:table-cell">
+                <IssueStatus status={status} />
+              </Table.Cell>
               <Table.Cell className="hidden md:table-cell">
                 {createdAt.toDateString()}
               </Table.Cell>
