@@ -27,6 +27,17 @@ const NewIssuePage: React.FC = () => {
   const [error, setError] = useState("");
   const [loading, setLoading] = useState(false);
 
+  const handleFormSubmit = handleSubmit(async (data) => {
+    try {
+      setLoading(true);
+      await axios.post("/api/issues", data);
+      router.push("/issues");
+    } catch (error) {
+      setLoading(false);
+      setError("An unexpected error occurred");
+    }
+  });
+
   return (
     <Box className="max-w-xl">
       {error && (
@@ -34,19 +45,7 @@ const NewIssuePage: React.FC = () => {
           <Callout.Text>{error}</Callout.Text>
         </Callout.Root>
       )}
-      <form
-        className="space-y-3"
-        onSubmit={handleSubmit(async (data) => {
-          try {
-            setLoading(true);
-            await axios.post("/api/issues", data);
-            router.push("/issues");
-          } catch (error) {
-            setLoading(false);
-            setError("An unexpected error occurred");
-          }
-        })}
-      >
+      <form className="space-y-3" onSubmit={handleFormSubmit}>
         <TextField.Root>
           <TextField.Input placeholder="Title" {...register("title")} />
         </TextField.Root>
