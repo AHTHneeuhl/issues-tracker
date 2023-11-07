@@ -1,6 +1,6 @@
 "use client";
 
-import { ErrorMessage } from "@/app/components";
+import { ErrorMessage, Spinner } from "@/app/components";
 import { createIssueSchema } from "@/app/validationSchemas";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { Box, Button, Callout, TextField } from "@radix-ui/themes";
@@ -25,6 +25,7 @@ const NewIssuePage: React.FC = () => {
     resolver: zodResolver(createIssueSchema),
   });
   const [error, setError] = useState("");
+  const [loading, setLoading] = useState(false);
 
   return (
     <Box className="max-w-xl">
@@ -37,9 +38,11 @@ const NewIssuePage: React.FC = () => {
         className="space-y-3"
         onSubmit={handleSubmit(async (data) => {
           try {
+            setLoading(true);
             await axios.post("/api/issues", data);
             router.push("/issues");
           } catch (error) {
+            setLoading(false);
             setError("An unexpected error occurred");
           }
         })}
@@ -56,7 +59,9 @@ const NewIssuePage: React.FC = () => {
           )}
         />
         <ErrorMessage>{errors.description?.message}</ErrorMessage>
-        <Button type="submit">Create Issue</Button>
+        <Button type="submit" disabled={loading}>
+          Create Issue <Spinner loading={loading} />
+        </Button>
       </form>
     </Box>
   );
