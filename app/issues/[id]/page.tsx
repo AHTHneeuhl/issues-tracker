@@ -1,5 +1,6 @@
+import { IssueStatus } from "@/app/components";
 import prisma from "@/prisma/client";
-import { Box, Text } from "@radix-ui/themes";
+import { Box, Card, Flex, Heading, Text } from "@radix-ui/themes";
 import { notFound } from "next/navigation";
 
 interface Props {
@@ -15,10 +16,14 @@ const IssueDetails: React.FC<Props> = async ({ params }) => {
 
   return (
     <Box className="flex flex-col gap-2">
-      <Text>{issue.title}</Text>
-      <Text>{issue.description}</Text>
-      <Text>{issue.status}</Text>
-      <Text>{issue.createdAt.toDateString()}</Text>
+      <Heading as="h2">{issue.title}</Heading>
+      <Flex gap="3">
+        <IssueStatus status={issue.status} />
+        <Text>{issue.createdAt.toDateString()}</Text>
+      </Flex>
+      <Card>
+        <Text>{issue.description}</Text>
+      </Card>
     </Box>
   );
 };
