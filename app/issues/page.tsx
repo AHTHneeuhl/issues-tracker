@@ -1,8 +1,7 @@
-import { IssueStatus } from "@/app/components";
+import { IssueStatus, Link } from "@/app/components";
 import prisma from "@/prisma/client";
 import { Box, Table } from "@radix-ui/themes";
 import Actions from "./Actions";
-import Link from "next/link";
 
 const Issues: React.FC = async () => {
   const issues = await prisma.issue.findMany();
