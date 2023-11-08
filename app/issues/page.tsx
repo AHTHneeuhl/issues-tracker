@@ -2,6 +2,7 @@ import { IssueStatus } from "@/app/components";
 import prisma from "@/prisma/client";
 import { Box, Table } from "@radix-ui/themes";
 import Actions from "./Actions";
+import Link from "next/link";
 
 const Issues: React.FC = async () => {
   const issues = await prisma.issue.findMany();
@@ -25,7 +26,7 @@ const Issues: React.FC = async () => {
           {issues.map(({ id, title, status, createdAt }) => (
             <Table.Row key={id}>
               <Table.Cell>
-                {title}
+                <Link href={`/issues/${id}`}>{title}</Link>
                 <Box className="block md:hidden">
                   <IssueStatus status={status} />
                 </Box>
