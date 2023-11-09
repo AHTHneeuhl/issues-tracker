@@ -1,12 +1,9 @@
-import { IssueStatus } from "@/app/components";
 import prisma from "@/prisma/client";
-import { Pencil2Icon } from "@radix-ui/react-icons";
-import { Box, Button, Card, Flex, Grid, Heading, Text } from "@radix-ui/themes";
-import Link from "next/link";
+import { Box, Flex, Grid } from "@radix-ui/themes";
 import { notFound } from "next/navigation";
-import ReactMarkdown from "react-markdown";
-import IssueEditButton from "./IssueEditButton";
+import IssueDeleteButton from "./IssueDeleteButton";
 import IssueDetails from "./IssueDetails";
+import IssueEditButton from "./IssueEditButton";
 
 interface Props {
   params: { id: string };
@@ -20,10 +17,13 @@ const IssueDetailsPage: React.FC<Props> = async ({ params }) => {
   if (!issue) notFound();
 
   return (
-    <Grid columns={{ initial: "1", md: "2" }} gap="5">
+    <Grid columns={{ initial: "1", sm: "5" }} gap="5">
       <IssueDetails issue={issue} />
       <Box>
-        <IssueEditButton issueId={issue.id} />
+        <Flex direction="column" gap="4">
+          <IssueEditButton issueId={issue.id} />
+          <IssueDeleteButton issueId={issue.id} />
+        </Flex>
       </Box>
     </Grid>
   );

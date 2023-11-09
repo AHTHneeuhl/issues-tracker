@@ -8,13 +8,13 @@ interface Props {
 }
 const IssueDetails: React.FC<Props> = ({ issue }) => {
   return (
-    <Box className="flex flex-col gap-2">
+    <Box className="flex flex-col gap-2 md:col-span-4">
       <Heading as="h2">{issue.title}</Heading>
       <Flex gap="3">
         <IssueStatus status={issue.status} />
         <Text>{issue.createdAt.toDateString()}</Text>
       </Flex>
-      <Card className="prose">
+      <Card className="prose max-w-full">
         <ReactMarkdown>{issue.description}</ReactMarkdown>
       </Card>
     </Box>
