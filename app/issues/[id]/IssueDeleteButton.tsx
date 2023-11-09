@@ -1,5 +1,6 @@
 "use clinet";
 
+import { Spinner } from "@/app/components";
 import { AlertDialog, Button, Flex } from "@radix-ui/themes";
 import axios from "axios";
 import { useRouter } from "next/navigation";
@@ -13,13 +14,16 @@ const IssueDeleteButton: React.FC<Props> = ({ issueId }) => {
   const router = useRouter();
 
   const [error, setError] = useState(false);
+  const [loading, setLoading] = useState(false);
 
   const handleDelete = async () => {
     try {
+      setLoading(true);
       await axios.delete("/api/issue/" + issueId);
       router.push("/issues");
       router.refresh();
     } catch (err) {
+      setLoading(false);
       setError(true);
     }
   };
@@ -28,7 +32,10 @@ const IssueDeleteButton: React.FC<Props> = ({ issueId }) => {
     <>
       <AlertDialog.Root>
         <AlertDialog.Trigger>
-          <Button color="red">Delete Issue</Button>
+          <Button color="red" disabled={loading}>
+            Delete Issue
+            {loading && <Spinner />}
+          </Button>
         </AlertDialog.Trigger>
         <AlertDialog.Content>
           <AlertDialog.Title>Confirm Deletion</AlertDialog.Title>
