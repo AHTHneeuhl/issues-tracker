@@ -44,4 +44,6 @@ const Issues: React.FC = async () => {
   );
 };
 
+export const dynamic = "force-dynamic";
+
 export default Issues;
