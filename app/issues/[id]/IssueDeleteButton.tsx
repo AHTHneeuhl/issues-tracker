@@ -1,4 +1,4 @@
-"use clinet";
+"use client";
 
 import { Spinner } from "@/app/components";
 import { AlertDialog, Button, Flex } from "@radix-ui/themes";
@@ -20,7 +20,7 @@ const IssueDeleteButton: React.FC<Props> = ({ issueId }) => {
     try {
       setLoading(true);
       await axios.delete("/api/issue/" + issueId);
-      router.push("/issues");
+      router.push("/issues/list");
       router.refresh();
     } catch (err) {
       setLoading(false);
